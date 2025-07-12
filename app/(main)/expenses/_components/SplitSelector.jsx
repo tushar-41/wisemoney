@@ -163,7 +163,7 @@ export function SplitSelector({
   const isAmountValid = Math.abs(totalAmount - amount) < 0.01;
 
   return (
-    <div>
+    <div className="mt-4 space-y-4">
       {splits.map((split) => (
         <div
         key={split.userId}
@@ -183,8 +183,78 @@ export function SplitSelector({
               ₹{split.amount.toFixed(2)} ({split.percentage.toFixed(1)}%)
             </div>
           )}
+            {/* Type is percentage */}
+          {type === "percentage" && (
+            <div className="flex items-center gap-4 flex-1">
+              <Slider
+              value={[split.percentage]}
+              min={0}
+              max={100}
+              onValueChange={(values) => 
+                updatePercentageSplit(split.userId, values[0])
+              }
+              className='flex-1' />
+              <div className="flex gap-1 items-center min-w-[100px]">
+                <Input
+                type='number'
+                min='0'
+                max='100'
+                value={split.percentage.toFixed(1)}
+                onChange={(e) =>
+                  updatePercentageSplit(
+                    split.userId,
+                    parseFloat(e.target.value) || 0
+                  )
+                }
+                className='w-20 h-8'/>
+                <span className="text-sm text-muted-foreground">%</span>
+                <span className="text-sm ml-1">₹{split.amount.toFixed(2)}</span>
+              </div>
+            </div>
+          )}
+
+          {/* Exact type splitting  . .... ..  */}
+          {type === 'exact' && (
+            <div className="flex items-center gap-2 flex-1">
+              <div className="flex-1"></div>
+              <span className="text-sm text-muted-foreground">₹</span>
+              <Input type='number' min='0' max={amount*2} step='0.01' value={split.amount.toFixed(2)} 
+              onChange={(e) => updateExactSplit(split.userId,e.target.value)} className='w-24 h-8'/>
+              <span className="text-sm text-muted-foreground ml-1">
+                ({split.percentage.toFixed(1)}%)
+              </span>
+            </div>
+          )}
         </div>
       ))}
+
+      <div className="flex justify-between border-t pt-3 mt-3">
+        <span className="font-medium">Total</span>
+        <div className="text-right">
+          <span 
+          className={`font-medium ${!isAmountValid ? "text-amber-500" : ""}`}
+          >
+            ({totalAmount.toFixed(2)})
+          </span>
+          {type !== "equal" && (
+            <span className={`text-sm mt-2 ${!isPercentageValid ? "text-amber-500" : ""}`}>
+              ({totalPercentage.toFixed(1)}%)
+            </span>
+          )}
+        </div>
+      </div>
+      {/* Validation warningss..... */}
+      {type === 'percentage' && !isPercentageValid &&(
+        <div className="text-sm text-amber-600 mt-2">
+          The percentages should be add up to 100%
+        </div>
+      )}
+
+      {type === 'exact' && !isAmountValid && (
+        <div className="text-sm text-amber-600 mt-2">
+          The sum of all splits (₹{totalAmount.toFixed(2)}) should equal the total amount (₹{amount.toFixed(2)}).
+        </div>
+      )}
     </div>
   );
 }
