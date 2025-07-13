@@ -34,7 +34,7 @@ const SettlementPage = () => {
       if(type === 'user'){
         router.push(`/person/${id}`);
       }else if(type === 'group'){
-        router.push(`/person/${id}`);
+        router.push(`/groups/${id}`);
       }
     }
 
