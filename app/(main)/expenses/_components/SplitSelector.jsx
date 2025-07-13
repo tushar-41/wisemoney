@@ -5,7 +5,6 @@ import { useUser } from "@clerk/nextjs";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
-import { Spline } from "lucide-react";
 
 export function SplitSelector({
   type,

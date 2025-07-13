@@ -64,7 +64,7 @@ const PersonExpenses = () => {
                     </Link>
                 </Button>
                 <Button asChild>
-                    <Link href={`expenses/new`}>
+                    <Link href={`/expenses/new`}>
                     <PlusCircle className='mr-2 h-4 w-4'/>
                     Add Expense
                     </Link>

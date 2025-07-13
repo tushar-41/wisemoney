@@ -70,7 +70,7 @@ export const settlementData = query({
             let owed = 0; //they owe me
             let owing = 0; //I owe them
 
-            for(exp of expenses){
+            for(const exp of expenses){
                 const involvesMe = exp.paidByUserId === me._id || 
                 exp.splits.some((s) => s.userId === me._id);
                 
@@ -99,7 +99,7 @@ export const settlementData = query({
 
             const settlements = [...mySettlements,...otherUserSettlements];
 
-            for(s of settlement){
+            for(const s of settlements){
                 if(s.paidByUserId === me._id){
                     //I paid them => my owing goes down 
                     owing = Math.max(0,owed - s.amount);
@@ -121,7 +121,7 @@ export const settlementData = query({
                 youOwe:owing,
                 netBalance:owed - owing, //=>you should receive , =>you should pay
             };
-        }else if(args.entityId === "group"){
+        }else if(args.entityType === "group"){
             /* ──────────────────────────────────────────────────────── group page */
       const group = await ctx.db.get(args.entityId);
       if (!group) throw new Error("Group not found");

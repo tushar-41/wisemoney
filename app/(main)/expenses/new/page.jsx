@@ -2,7 +2,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React from "react";
 import ExpenseForm from "../_components/ExpenseForm";
 
 const NewExpensePage = () => {
