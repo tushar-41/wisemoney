@@ -34,6 +34,8 @@ const SettlementForm = (
     const {data:currentUser} = useConvexQuery(api.users.getCurrentUser);
     const createSettlement = useConvexMutation(api.settlements.createSettlements);
 
+    const [selectedGroupMemberId,setSelectedGroupMemberId] = useState(null);
+
     const 
     {register,
     handleSubmit,
@@ -56,9 +58,9 @@ const SettlementForm = (
         const amount = data.amount;
 
         try {
-            const paidByUserId = data.paymentType === 'youPaid' ? currentUser._id : entityData.counterPart.userId;
+            const paidByUserId = data.paymentType === 'youPaid' ? currentUser._id : entityData?.counterPart?.userId;
 
-            const receivedByUserId = data.paymentType === 'youPaid' ? entityData.counterPart.userId : currentUser._id;
+            const receivedByUserId = data.paymentType === 'youPaid' ? entityData?.counterPart?.userId : currentUser._id;
 
             await createSettlement.mutate({
                 amount,
@@ -110,8 +112,6 @@ const SettlementForm = (
             await handleGroupSettlement(data,selectedGroupMemberId);
         }
     }
-
-    const [selectedGroupMemberId,setSelectedGroupMemberId] = useState(entityData.balances.userId);
 
     if(!currentUser) return null;
 
