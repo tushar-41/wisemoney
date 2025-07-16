@@ -46,7 +46,7 @@ export function GroupMembers({ members }) {
               </div>
             </div>
           </div>
-        );
+        )
       })}
     </div>
   );
