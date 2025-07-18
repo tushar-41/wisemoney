@@ -19,7 +19,7 @@ export const createSettlements = mutation({
         if(args.paidByUserId === args.receivedByUserId){
             throw new Error('Payer and receiver cannot be the same user');
         }
-        if(caller._id !== args.paidByUserId && caller._id !== receivedByUserId){
+        if(caller._id !== args.paidByUserId && caller._id !== args.receivedByUserId){
             throw new Error('You must be either the payer or the receiver');
         }
 
@@ -102,7 +102,7 @@ export const settlementData = query({
             for(const s of settlements){
                 if(s.paidByUserId === me._id){
                     //I paid them => my owing goes down 
-                    owing = Math.max(0,owed - s.amount);
+                    owing = Math.max(0,owing - s.amount);
                 }else{
                     //They paid me => their owing goes down
                     owed = Math.max(0,owed - s.amount);

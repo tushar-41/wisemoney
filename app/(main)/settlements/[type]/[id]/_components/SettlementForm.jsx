@@ -40,6 +40,7 @@ const SettlementForm = (
     {register,
     handleSubmit,
     watch,
+    reset,
     formState:{isSubmitting,errors}
     } = useForm({
         resolver:zodResolver(settlementSchema),
@@ -55,7 +56,7 @@ const SettlementForm = (
 
     //Single user settlment 
     const handleUserSettlement = async(data) => {
-        const amount = data.amount;
+        const amount = parseFloat(data.amount);
 
         try {
             const paidByUserId = data.paymentType === 'youPaid' ? currentUser._id : entityData?.counterPart?.userId;
@@ -71,6 +72,7 @@ const SettlementForm = (
             });
 
             toast.success('Settlement created successfully');
+            reset();
             if(onSuccess) onSuccess();
         } catch (error) {
             toast.error("Failed to record settlement" + error.message);
@@ -99,6 +101,7 @@ const SettlementForm = (
          });
 
           toast.success("Settlement recorded successfully!");
+          reset();
           if (onSuccess) onSuccess();
     } catch (error) {
       toast.error("Failed to record settlement: " + error.message);  
@@ -117,7 +120,7 @@ const SettlementForm = (
 
     if(entityType === 'user'){
         const otherUser = entityData.counterPart;
-        const netBalance = entityData.counterPart.netBalance;
+        const netBalance = entityData?.counterPart?.netBalance ?? 0;
     
   return (
     <form onSubmit={handleSubmit(onSubmit)} className='space-y-4'>
@@ -134,7 +137,7 @@ const SettlementForm = (
         ):(
             <div className='flex justify-between items-center'>
                 <p>You owe<span className='font-medium ml-4'>{otherUser.name}</span></p>
-                <span className='text-red-600 font-bold text-xl'>₹{Math.abs(netBalance  ).toFixed(2)}</span>
+                <span className='text-red-600 font-bold text-xl'>₹{Math.abs(netBalance).toFixed(2)}</span>
             </div>
         )}
         </div>
@@ -212,7 +215,7 @@ const SettlementForm = (
           />
         </div>
 
-        <Button type="submit" className="w-full" disabled={isSubmitting}>
+        <Button type="submit" className="w-full" disabled={isSubmitting || netBalance<=0}>
           {isSubmitting ? "Recording..." : "Record settlement"}
         </Button>
       </form>
