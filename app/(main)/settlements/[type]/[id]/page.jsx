@@ -30,7 +30,7 @@ const SettlementPage = () => {
 
 
     //Funtion to handle after successful submission creation
-    const handleSuccess = () => {
+    const handleSuccess = (type) => {
       if(type === 'user'){
         router.push(`/person/${id}`);
       }else if(type === 'group'){
