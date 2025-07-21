@@ -17,8 +17,8 @@ export default function Header() {
   return (
     <header className="fixed top-0 w-full border-b bg-white/95 backdrop-blur z-50 supports-[backdrop-filter]:bg-white/60">
       <nav className="container mx-auto px-4 h-16 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-2">
-          <h2 className="text-[45px] font-bold gradient-title">Wise Money</h2>
+        <Link href="/" className="flex items-center gap-2 pt-2">
+          <h2 className="text-[25px] font-bold gradient-title lg:text-[45px]">Wise Money</h2>
         </Link>
         {path === "/" && (
           <div className="hidden md:flex items-center gap-6">
