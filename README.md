@@ -38,3 +38,18 @@ npm install
 # Run development server
 npm run dev
 ```
+#Environment variables
+```bash
+# Deployment used by `npx convex dev`
+CONVEX_DEPLOY_KEY=
+CONVEX_DEPLOYMENT=
+
+NEXT_PUBLIC_CONVEX_URL=
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
+CLERK_SECRET_KEY=
+
+NEXT_PUBLIC_CLERK_SIGN_IN_URL=
+NEXT_PUBLIC_CLERK_SIGN_UP_URL=
+NEXT_PUBLIC_CLERK_FRONTEND_API_URL=
+RESEND_API_KEY=
+```
