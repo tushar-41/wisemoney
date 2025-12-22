@@ -26,7 +26,7 @@ export default defineSchema({
                 paid:v.boolean(),
             })
         ),
-        groupId:v.optional(v.id("groups")),  //Null ofr one-on-one expense
+        groupId:v.optional(v.id("groups")),  //Null for one-on-one expense
         createdBy:v.id("users"), //reference to the users table
     }).index("by_group",["groupId"])
       .index("by_user_and_group",["paidByUserId","groupId"])
@@ -50,7 +50,7 @@ export default defineSchema({
         note:v.optional(v.string()),
         date:v.number(), //Timestamp
         paidByUserId:v.id("users"), //Reference to users table
-        receivedByUserId:v.id("users"), //Reference to suers table
+        receivedByUserId:v.id("users"), //Reference to users table
         groupId:v.optional(v.id("groups")), //Null for the one-one settlements
         relatedExpenseIds:v.optional(v.array(v.id("expenses"))), //Which expenses this settlements cover
         createdBy:v.id("users"), //Reference to users table
